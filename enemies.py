@@ -125,14 +125,11 @@ class SquareBotWalkLineY(Square):
 class Coin(Square):
     def __init__(self, x, y, width=20, height=20, color="yellow"):
         super().__init__(x, y, width, height, color)
-        #pygame.time.set_timer(self.end(),5000)
         self.delete = False
-        self.timer = 0
-
-    def end_life(self):
-        self.delete = True
+        self.life_span = 5000  
+        self.creation_time = pygame.time.get_ticks()
 
     def aging(self):
-        self.timer += 1
-        if self.timer >= 700:
-            self.end_life()
+        current_time = pygame.time.get_ticks()
+        if (current_time - self.creation_time) >= self.life_span:
+            self.delete = True
